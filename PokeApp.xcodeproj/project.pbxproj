@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F1A2780293FA9B800A18CA0 /* ApolloNetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1A277F293FA9B800A18CA0 /* ApolloNetworkHelper.swift */; };
+		5F1A2782293FB3E500A18CA0 /* PokemonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1A2781293FB3E500A18CA0 /* PokemonViewModel.swift */; };
+		5F1A2787293FBC7500A18CA0 /* PokemonAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 5F1A2786293FBC7500A18CA0 /* PokemonAPI */; };
+		5F1A278A293FC07100A18CA0 /* PokemonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1A2789293FC07100A18CA0 /* PokemonModel.swift */; };
 		5F7E4598293BEFBF006D6501 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7E4597293BEFBF006D6501 /* AppDelegate.swift */; };
 		5F7E459A293BEFBF006D6501 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7E4599293BEFBF006D6501 /* SceneDelegate.swift */; };
 		5F7E459C293BEFBF006D6501 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7E459B293BEFBF006D6501 /* ViewController.swift */; };
@@ -21,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F1A277F293FA9B800A18CA0 /* ApolloNetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApolloNetworkHelper.swift; sourceTree = "<group>"; };
+		5F1A2781293FB3E500A18CA0 /* PokemonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonViewModel.swift; sourceTree = "<group>"; };
+		5F1A2789293FC07100A18CA0 /* PokemonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonModel.swift; sourceTree = "<group>"; };
 		5F7E4594293BEFBF006D6501 /* PokeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F7E4597293BEFBF006D6501 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F7E4599293BEFBF006D6501 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F1A2787293FBC7500A18CA0 /* PokemonAPI in Frameworks */,
 				5FDD8F80293E974200FDD18A /* ApolloAPI in Frameworks */,
 				5FDD8F7E293E974200FDD18A /* Apollo in Frameworks */,
 			);
@@ -47,11 +55,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F1A2785293FBC7500A18CA0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5F1A2788293FBFED00A18CA0 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5F1A2781293FB3E500A18CA0 /* PokemonViewModel.swift */,
+				5F1A2789293FC07100A18CA0 /* PokemonModel.swift */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
 		5F7E458B293BEFBF006D6501 = {
 			isa = PBXGroup;
 			children = (
 				5F7E4596293BEFBF006D6501 /* PokeApp */,
 				5F7E4595293BEFBF006D6501 /* Products */,
+				5F1A2785293FBC7500A18CA0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +91,7 @@
 		5F7E4596293BEFBF006D6501 /* PokeApp */ = {
 			isa = PBXGroup;
 			children = (
+				5F1A2788293FBFED00A18CA0 /* App */,
 				5FF2150B293F238A003DF11E /* GraphQL */,
 				5F7E4597293BEFBF006D6501 /* AppDelegate.swift */,
 				5F7E4599293BEFBF006D6501 /* SceneDelegate.swift */,
@@ -84,6 +110,7 @@
 				5FF21508293F2342003DF11E /* PokemonAPI */,
 				5FF21504293F182D003DF11E /* GetAllPokemon.graphql */,
 				5FF21502293F17CD003DF11E /* schema.graphqls */,
+				5F1A277F293FA9B800A18CA0 /* ApolloNetworkHelper.swift */,
 			);
 			name = GraphQL;
 			sourceTree = "<group>";
@@ -102,11 +129,13 @@
 			buildRules = (
 			);
 			dependencies = (
+				5F1A2784293FB95100A18CA0 /* PBXTargetDependency */,
 			);
 			name = PokeApp;
 			packageProductDependencies = (
 				5FDD8F7D293E974200FDD18A /* Apollo */,
 				5FDD8F7F293E974200FDD18A /* ApolloAPI */,
+				5F1A2786293FBC7500A18CA0 /* PokemonAPI */,
 			);
 			productName = PokeApp;
 			productReference = 5F7E4594293BEFBF006D6501 /* PokeApp.app */;
@@ -170,12 +199,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F7E459C293BEFBF006D6501 /* ViewController.swift in Sources */,
+				5F1A278A293FC07100A18CA0 /* PokemonModel.swift in Sources */,
+				5F1A2782293FB3E500A18CA0 /* PokemonViewModel.swift in Sources */,
+				5F1A2780293FA9B800A18CA0 /* ApolloNetworkHelper.swift in Sources */,
 				5F7E4598293BEFBF006D6501 /* AppDelegate.swift in Sources */,
 				5F7E459A293BEFBF006D6501 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5F1A2784293FB95100A18CA0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 5F1A2783293FB95100A18CA0 /* PokemonAPI */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5F7E459D293BEFBF006D6501 /* Main.storyboard */ = {
@@ -402,6 +441,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5F1A2783293FB95100A18CA0 /* PokemonAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PokemonAPI;
+		};
+		5F1A2786293FBC7500A18CA0 /* PokemonAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PokemonAPI;
+		};
 		5FDD8F7D293E974200FDD18A /* Apollo */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5FDD8F7C293E974200FDD18A /* XCRemoteSwiftPackageReference "apollo-ios" */;

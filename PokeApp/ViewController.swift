@@ -8,10 +8,12 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    var viewModel: PokemonViewModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        viewModel = PokemonViewModel()
+        viewModel.fetchDataFromService()
     }
 
 
