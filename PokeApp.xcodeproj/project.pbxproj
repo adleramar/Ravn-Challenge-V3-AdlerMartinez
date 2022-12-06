@@ -13,6 +13,11 @@
 		5F7E459F293BEFBF006D6501 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E459D293BEFBF006D6501 /* Main.storyboard */; };
 		5F7E45A1293BEFC0006D6501 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E45A0293BEFC0006D6501 /* Assets.xcassets */; };
 		5F7E45A4293BEFC0006D6501 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E45A2293BEFC0006D6501 /* LaunchScreen.storyboard */; };
+		5FDD8F7E293E974200FDD18A /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 5FDD8F7D293E974200FDD18A /* Apollo */; };
+		5FDD8F80293E974200FDD18A /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 5FDD8F7F293E974200FDD18A /* ApolloAPI */; };
+		5FF21503293F17CD003DF11E /* schema.graphqls in Resources */ = {isa = PBXBuildFile; fileRef = 5FF21502293F17CD003DF11E /* schema.graphqls */; };
+		5FF21505293F182D003DF11E /* GetAllPokemon.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 5FF21504293F182D003DF11E /* GetAllPokemon.graphql */; };
+		5FF21509293F2342003DF11E /* PokemonAPI in Resources */ = {isa = PBXBuildFile; fileRef = 5FF21508293F2342003DF11E /* PokemonAPI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +29,9 @@
 		5F7E45A0293BEFC0006D6501 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F7E45A3293BEFC0006D6501 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F7E45A5293BEFC0006D6501 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5FF21502293F17CD003DF11E /* schema.graphqls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = schema.graphqls; sourceTree = "<group>"; };
+		5FF21504293F182D003DF11E /* GetAllPokemon.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetAllPokemon.graphql; sourceTree = "<group>"; };
+		5FF21508293F2342003DF11E /* PokemonAPI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PokemonAPI; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +39,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FDD8F80293E974200FDD18A /* ApolloAPI in Frameworks */,
+				5FDD8F7E293E974200FDD18A /* Apollo in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +66,7 @@
 		5F7E4596293BEFBF006D6501 /* PokeApp */ = {
 			isa = PBXGroup;
 			children = (
+				5FF2150B293F238A003DF11E /* GraphQL */,
 				5F7E4597293BEFBF006D6501 /* AppDelegate.swift */,
 				5F7E4599293BEFBF006D6501 /* SceneDelegate.swift */,
 				5F7E459B293BEFBF006D6501 /* ViewController.swift */,
@@ -65,6 +76,16 @@
 				5F7E45A5293BEFC0006D6501 /* Info.plist */,
 			);
 			path = PokeApp;
+			sourceTree = "<group>";
+		};
+		5FF2150B293F238A003DF11E /* GraphQL */ = {
+			isa = PBXGroup;
+			children = (
+				5FF21508293F2342003DF11E /* PokemonAPI */,
+				5FF21504293F182D003DF11E /* GetAllPokemon.graphql */,
+				5FF21502293F17CD003DF11E /* schema.graphqls */,
+			);
+			name = GraphQL;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +104,10 @@
 			dependencies = (
 			);
 			name = PokeApp;
+			packageProductDependencies = (
+				5FDD8F7D293E974200FDD18A /* Apollo */,
+				5FDD8F7F293E974200FDD18A /* ApolloAPI */,
+			);
 			productName = PokeApp;
 			productReference = 5F7E4594293BEFBF006D6501 /* PokeApp.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +136,9 @@
 				Base,
 			);
 			mainGroup = 5F7E458B293BEFBF006D6501;
+			packageReferences = (
+				5FDD8F7C293E974200FDD18A /* XCRemoteSwiftPackageReference "apollo-ios" */,
+			);
 			productRefGroup = 5F7E4595293BEFBF006D6501 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,8 +153,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FF21503293F17CD003DF11E /* schema.graphqls in Resources */,
 				5F7E45A4293BEFC0006D6501 /* LaunchScreen.storyboard in Resources */,
 				5F7E45A1293BEFC0006D6501 /* Assets.xcassets in Resources */,
+				5FF21509293F2342003DF11E /* PokemonAPI in Resources */,
+				5FF21505293F182D003DF11E /* GetAllPokemon.graphql in Resources */,
 				5F7E459F293BEFBF006D6501 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,7 +247,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -270,7 +301,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -358,6 +389,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5FDD8F7C293E974200FDD18A /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5FDD8F7D293E974200FDD18A /* Apollo */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FDD8F7C293E974200FDD18A /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = Apollo;
+		};
+		5FDD8F7F293E974200FDD18A /* ApolloAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FDD8F7C293E974200FDD18A /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = ApolloAPI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5F7E458C293BEFBF006D6501 /* Project object */;
 }

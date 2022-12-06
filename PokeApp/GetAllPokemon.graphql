@@ -1,0 +1,22 @@
+query GetAllPokemon($offset: Int) {
+  getAllPokemon(offset: $offset) {
+    num
+    color
+    baseSpecies
+    key
+    sprite
+    types {
+      name
+    }
+    preevolutions {
+      num
+      color
+      key
+    }
+    evolutions {
+      num
+      color
+      key
+    }
+  }
+}
