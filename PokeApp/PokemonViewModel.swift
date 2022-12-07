@@ -14,7 +14,7 @@ class PokemonViewModel {
         
     }
     func fetchDataFromService() {
-        ApolloNetworkHelper.shared.apolloClient.fetch(query: GetAllPokemonQuery(offset: nil)) { result in
+        ApolloNetworkHelper.shared.apolloClient.fetch(query: GetAllPokemonQuery()) { result in
             switch result {
             case .success(let petitionResult):
                 print("Success! Result: \(petitionResult)")
@@ -22,9 +22,5 @@ class PokemonViewModel {
                 print("Failure! Error: \(error)")
             }
         }
-    }
-    
-    deinit {
-        
     }
 }

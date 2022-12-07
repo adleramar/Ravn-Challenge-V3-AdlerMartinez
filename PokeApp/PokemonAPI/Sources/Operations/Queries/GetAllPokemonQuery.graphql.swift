@@ -8,14 +8,15 @@ public class GetAllPokemonQuery: GraphQLQuery {
   public static let document: ApolloAPI.DocumentType = .notPersisted(
     definition: .init(
       """
-      query GetAllPokemon($offset: Int) {
-        getAllPokemon(offset: $offset) {
+      query GetAllPokemon {
+        getAllPokemon {
           __typename
           num
           color
           baseSpecies
           key
           sprite
+          shinySprite
           types {
             __typename
             name
@@ -25,25 +26,23 @@ public class GetAllPokemonQuery: GraphQLQuery {
             num
             color
             key
+            sprite
+            shinySprite
           }
           evolutions {
             __typename
             num
             color
             key
+            sprite
+            shinySprite
           }
         }
       }
       """
     ))
 
-  public var offset: GraphQLNullable<Int>
-
-  public init(offset: GraphQLNullable<Int>) {
-    self.offset = offset
-  }
-
-  public var __variables: Variables? { ["offset": offset] }
+  public init() {}
 
   public struct Data: PokemonAPI.SelectionSet {
     public let __data: DataDict
@@ -51,7 +50,7 @@ public class GetAllPokemonQuery: GraphQLQuery {
 
     public static var __parentType: ParentType { PokemonAPI.Objects.Query }
     public static var __selections: [Selection] { [
-      .field("getAllPokemon", [GetAllPokemon].self, arguments: ["offset": .variable("offset")]),
+      .field("getAllPokemon", [GetAllPokemon].self),
     ] }
 
     /// Returns a list of all the known Pokémon.
@@ -83,6 +82,7 @@ public class GetAllPokemonQuery: GraphQLQuery {
         .field("baseSpecies", String?.self),
         .field("key", GraphQLEnum<PokemonEnum>.self),
         .field("sprite", String.self),
+        .field("shinySprite", String.self),
         .field("types", [Type_SelectionSet].self),
         .field("preevolutions", [Preevolution]?.self),
         .field("evolutions", [Evolution]?.self),
@@ -98,6 +98,8 @@ public class GetAllPokemonQuery: GraphQLQuery {
       public var key: GraphQLEnum<PokemonEnum> { __data["key"] }
       /// The sprite for a Pokémon. For most Pokémon this will be the animated gif, with some exceptions that were older-gen exclusive
       public var sprite: String { __data["sprite"] }
+      /// The shiny sprite for a Pokémon. For most Pokémon this will be the animated gif, with some exceptions that were older-gen exclusive
+      public var shinySprite: String { __data["shinySprite"] }
       /// The types for a Pokémon
       public var types: [Type_SelectionSet] { __data["types"] }
       /// The preevolutions for a Pokémon, if any
@@ -133,6 +135,8 @@ public class GetAllPokemonQuery: GraphQLQuery {
           .field("num", Int.self),
           .field("color", String.self),
           .field("key", GraphQLEnum<PokemonEnum>.self),
+          .field("sprite", String.self),
+          .field("shinySprite", String.self),
         ] }
 
         /// The dex number for a Pokémon
@@ -141,6 +145,10 @@ public class GetAllPokemonQuery: GraphQLQuery {
         public var color: String { __data["color"] }
         /// The key of the Pokémon as stored in the API
         public var key: GraphQLEnum<PokemonEnum> { __data["key"] }
+        /// The sprite for a Pokémon. For most Pokémon this will be the animated gif, with some exceptions that were older-gen exclusive
+        public var sprite: String { __data["sprite"] }
+        /// The shiny sprite for a Pokémon. For most Pokémon this will be the animated gif, with some exceptions that were older-gen exclusive
+        public var shinySprite: String { __data["shinySprite"] }
       }
 
       /// GetAllPokemon.Evolution
@@ -155,6 +163,8 @@ public class GetAllPokemonQuery: GraphQLQuery {
           .field("num", Int.self),
           .field("color", String.self),
           .field("key", GraphQLEnum<PokemonEnum>.self),
+          .field("sprite", String.self),
+          .field("shinySprite", String.self),
         ] }
 
         /// The dex number for a Pokémon
@@ -163,6 +173,10 @@ public class GetAllPokemonQuery: GraphQLQuery {
         public var color: String { __data["color"] }
         /// The key of the Pokémon as stored in the API
         public var key: GraphQLEnum<PokemonEnum> { __data["key"] }
+        /// The sprite for a Pokémon. For most Pokémon this will be the animated gif, with some exceptions that were older-gen exclusive
+        public var sprite: String { __data["sprite"] }
+        /// The shiny sprite for a Pokémon. For most Pokémon this will be the animated gif, with some exceptions that were older-gen exclusive
+        public var shinySprite: String { __data["shinySprite"] }
       }
     }
   }
