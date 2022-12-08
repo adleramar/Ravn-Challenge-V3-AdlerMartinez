@@ -21,7 +21,7 @@ class PokeAPIService {
     
     // MARK: - API methods
     
-    func getPokemonTypes(completion: @escaping (_ Types: [PokemonTypeAPIModel]?) -> ()) {
+    func getPokemonTypes(completion: @escaping (_ Types: PokemonTypeAPIModel?) -> ()) {
         
         var request = URLRequest(url: URL(string: "https://pokeapi.co/api/v2/type")!)
         request.httpMethod = "GET"

@@ -15,6 +15,8 @@
 		5F4DFC79294165DA00873D07 /* PokemonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F4DFC77294165DA00873D07 /* PokemonCell.xib */; };
 		5F4DFC7D29416A4C00873D07 /* PokeAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DFC7C29416A4C00873D07 /* PokeAPIService.swift */; };
 		5F4DFC8029416BD200873D07 /* PokemonTypeAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DFC7F29416BD200873D07 /* PokemonTypeAPIModel.swift */; };
+		5F6373D62941A10E0062E6B0 /* LoadingDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6373D42941A10E0062E6B0 /* LoadingDataCell.swift */; };
+		5F6373D72941A10E0062E6B0 /* LoadingDataCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F6373D52941A10E0062E6B0 /* LoadingDataCell.xib */; };
 		5F6F47A329400822007874FA /* PokemonAPI in Resources */ = {isa = PBXBuildFile; fileRef = 5F6F47A229400822007874FA /* PokemonAPI */; };
 		5F6F47A5294037D1007874FA /* PokemonAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 5F6F47A4294037D1007874FA /* PokemonAPI */; };
 		5F6F47A829403881007874FA /* EvolutionAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6F47A729403881007874FA /* EvolutionAPIModel.swift */; };
@@ -41,6 +43,8 @@
 		5F4DFC77294165DA00873D07 /* PokemonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PokemonCell.xib; sourceTree = "<group>"; };
 		5F4DFC7C29416A4C00873D07 /* PokeAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAPIService.swift; sourceTree = "<group>"; };
 		5F4DFC7F29416BD200873D07 /* PokemonTypeAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonTypeAPIModel.swift; sourceTree = "<group>"; };
+		5F6373D42941A10E0062E6B0 /* LoadingDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingDataCell.swift; sourceTree = "<group>"; };
+		5F6373D52941A10E0062E6B0 /* LoadingDataCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingDataCell.xib; sourceTree = "<group>"; };
 		5F6F47A229400822007874FA /* PokemonAPI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PokemonAPI; sourceTree = "<group>"; };
 		5F6F47A729403881007874FA /* EvolutionAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolutionAPIModel.swift; sourceTree = "<group>"; };
 		5F6F47A9294038E7007874FA /* PokemonInfoAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonInfoAPIModel.swift; sourceTree = "<group>"; };
@@ -102,8 +106,8 @@
 		5F4DFC75294165A800873D07 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				5F4DFC76294165DA00873D07 /* PokemonCell.swift */,
-				5F4DFC77294165DA00873D07 /* PokemonCell.xib */,
+				5F6373D92941A18B0062E6B0 /* Code */,
+				5F6373D82941A17E0062E6B0 /* Xibs */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -132,6 +136,24 @@
 				5F4DFC7F29416BD200873D07 /* PokemonTypeAPIModel.swift */,
 			);
 			name = "Data Structures";
+			sourceTree = "<group>";
+		};
+		5F6373D82941A17E0062E6B0 /* Xibs */ = {
+			isa = PBXGroup;
+			children = (
+				5F4DFC77294165DA00873D07 /* PokemonCell.xib */,
+				5F6373D52941A10E0062E6B0 /* LoadingDataCell.xib */,
+			);
+			name = Xibs;
+			sourceTree = "<group>";
+		};
+		5F6373D92941A18B0062E6B0 /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				5F4DFC76294165DA00873D07 /* PokemonCell.swift */,
+				5F6373D42941A10E0062E6B0 /* LoadingDataCell.swift */,
+			);
+			name = Code;
 			sourceTree = "<group>";
 		};
 		5F6F47A629403859007874FA /* Data Structures */ = {
@@ -266,6 +288,7 @@
 				5F7E45A4293BEFC0006D6501 /* LaunchScreen.storyboard in Resources */,
 				5F4DFC79294165DA00873D07 /* PokemonCell.xib in Resources */,
 				5F7E45A1293BEFC0006D6501 /* Assets.xcassets in Resources */,
+				5F6373D72941A10E0062E6B0 /* LoadingDataCell.xib in Resources */,
 				5F6F47A329400822007874FA /* PokemonAPI in Resources */,
 				5FF21505293F182D003DF11E /* GetAllPokemon.graphql in Resources */,
 				5F7E459F293BEFBF006D6501 /* Main.storyboard in Resources */,
@@ -281,6 +304,7 @@
 			files = (
 				5F7E459C293BEFBF006D6501 /* PokemonSearchVC.swift in Sources */,
 				5F1A278A293FC07100A18CA0 /* PokemonAPIModel.swift in Sources */,
+				5F6373D62941A10E0062E6B0 /* LoadingDataCell.swift in Sources */,
 				5F4DFC8029416BD200873D07 /* PokemonTypeAPIModel.swift in Sources */,
 				5F4DFC78294165DA00873D07 /* PokemonCell.swift in Sources */,
 				5F1A2782293FB3E500A18CA0 /* PokemonViewModel.swift in Sources */,

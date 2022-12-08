@@ -7,6 +7,9 @@
 
 import UIKit
 
+fileprivate typealias PokemonSnapshot = NSDiffableDataSourceSnapshot<AnyHashable, Pokemon>
+fileprivate typealias PokemonDataSource = UITableViewDiffableDataSource<AnyHashable, Pokemon>
+
 class PokemonSearchVC: UIViewController, UITableViewDelegate {
     // Outlets
     @IBOutlet weak var pokemonTableView: UITableView!
@@ -25,6 +28,8 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate {
         title = "Pokémon List"
         navigationItem.searchController = searchController
         pokemonTableView.delegate = self
+        pokemonTableView.separatorStyle = .none
+        pokemonTableView.register(UINib(nibName: "LoadingDataCell", bundle: nil), forCellReuseIdentifier: "loadingDataCell")
         pokemonTableView.register(UINib(nibName: "PokemonCell", bundle: nil), forCellReuseIdentifier: "pokemonCell")
         viewModel = PokemonViewModel()
         viewModel.fetchDataFromService()

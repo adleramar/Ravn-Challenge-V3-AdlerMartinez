@@ -8,9 +8,9 @@
 import UIKit
 import CoreData
 
-class HomeworkRepository {
+class StoredPokemonRepository {
     
-    var managedContext: NSManagedObjectContext!
+    private var managedContext: NSManagedObjectContext!
     
     init() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return  }
@@ -39,7 +39,7 @@ class HomeworkRepository {
     /// Method to store the pokemon data locally
     /// - Parameters:
     ///     - pokemon: array of pokemon details
-    func storePokemonLocally(pokemon: [PokemonInfoAPIModel]) {
+    func storePokemonLocally(pokemon: [PokemonInfoAPIModel], types: [PokemonTypeAPIModel.TypeResults]) -> Bool {
         for singlePokemon in pokemon {
             let localPokemon = Pokemon(context: managedContext)
             
@@ -50,7 +50,8 @@ class HomeworkRepository {
             localPokemon.key = singlePokemon.key
             localPokemon.sprite = singlePokemon.sprite
             localPokemon.shinySprite = singlePokemon.shinySprite
-            localPokemon.types = singlePokemon.types
+            storePokemonTypesLocally(pokemon: localPokemon, typeNames: singlePokemon.types, types: types)
+            
             if let preevolutions = singlePokemon.preevolutions {
                 self.storePokemonPreevolutions(pokemon: localPokemon, preevolutions: preevolutions)
             }
@@ -60,8 +61,10 @@ class HomeworkRepository {
             
             do {
                 try managedContext.save()
+                return true
             } catch {
-                fatalError(error.localizedDescription)
+//                fatalError(error.localizedDescription)
+                return false
             }
         }
     } // end storePokemonLocally()
@@ -101,4 +104,22 @@ class HomeworkRepository {
             pokemon.addToPreevolution(localPokemonPreEvolution)
         }
     } // end storePokemonPreevolutions()
+    
+    /// Method to store the pokemon type data locally
+    /// - Parameters:
+    ///     - pokemon: the pokemon whose types are going to be added
+    ///     - typeNames: the type strings provided by the graphQL Service
+    ///     - types: the types of the pokemon provided by the REST Service
+    func storePokemonTypesLocally(pokemon: Pokemon, typeNames: [String], types: [PokemonTypeAPIModel.TypeResults]) {
+        for typeName in typeNames {
+            let pokeType = types.first(where: {$0.name == typeName.lowercased()})
+            
+            let pokemonType = PokemonType(context: managedContext)
+            
+            pokemonType.name = pokeType?.name
+            pokemonType.urlString = pokeType?.url
+            
+            pokemon.addToType(pokemonType)
+        }
+    } // end storePokemonTypesLocally()
 }

@@ -82,6 +82,14 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="greyBackgroundView" destination="EiS-W2-ac2" id="s7Z-fe-gxG"/>
+                <outlet property="pokemonImageView" destination="2dU-lE-def" id="8uq-FQ-qQJ"/>
+                <outlet property="pokemonNameLabel" destination="lfd-dW-haw" id="ISl-6c-JJm"/>
+                <outlet property="pokemonNumberLabel" destination="jm0-6b-Rol" id="q8b-vw-y86"/>
+                <outlet property="pokemonTypeImageViewLeft" destination="pZw-SS-eh5" id="Bmm-IB-spo"/>
+                <outlet property="pokemonTypeImageViewRight" destination="7fn-6J-pue" id="dMy-0U-mvj"/>
+            </connections>
             <point key="canvasLocation" x="117.55725190839694" y="-8.4507042253521139"/>
         </tableViewCell>
     </objects>
