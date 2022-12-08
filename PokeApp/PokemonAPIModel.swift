@@ -12,12 +12,12 @@ typealias PokemonData = GetAllPokemonQuery.Data.GetAllPokemon
 typealias PokemonPreevolution = GetAllPokemonQuery.Data.GetAllPokemon.Preevolution
 typealias PokemonEvolution = GetAllPokemonQuery.Data.GetAllPokemon.Evolution
 
-struct Pokemon: Decodable {
-    var pokemonList: [PokemonDetails]
+struct PokemonAPIModel: Decodable {
+    var pokemonList: [PokemonInfoAPIModel]
     
     init(_ pokemonList: [PokemonData]?) {
-        self.pokemonList = pokemonList?.map({ pokemon -> PokemonDetails in
-            PokemonDetails(pokemon)
+        self.pokemonList = pokemonList?.map({ pokemon -> PokemonInfoAPIModel in
+            PokemonInfoAPIModel(pokemon)
         }) ?? []
     }
 }

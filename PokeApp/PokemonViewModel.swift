@@ -10,7 +10,7 @@ import Apollo
 import PokemonAPI
 
 class PokemonViewModel {
-    var allPokemon: [PokemonDetails]
+    var allPokemon: [PokemonInfoAPIModel]
     
     init() {
         allPokemon = []
@@ -32,7 +32,7 @@ class PokemonViewModel {
         }
     }
     
-    func processPokemon(data: [PokemonData]) -> [PokemonDetails] {
-        return Pokemon(data).pokemonList
+    func processPokemon(data: [PokemonData]) -> [PokemonInfoAPIModel] {
+        return PokemonAPIModel(data).pokemonList
     }
 }

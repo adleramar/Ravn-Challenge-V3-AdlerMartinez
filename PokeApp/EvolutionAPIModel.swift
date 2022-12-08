@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EvolutionInfo: Hashable, Decodable {
+struct EvolutionAPIModel: Hashable, Decodable {
     var uuid = UUID()
     let num: Int
     let color: String

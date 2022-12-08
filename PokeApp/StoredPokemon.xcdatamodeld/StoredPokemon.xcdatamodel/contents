@@ -1,2 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22A400" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier=""/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22A400" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Evolution" representedClassName="Evolution" syncable="YES" codeGenerationType="class">
+        <attribute name="color" optional="YES" attributeType="String"/>
+        <attribute name="key" optional="YES" attributeType="String"/>
+        <attribute name="num" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="shinySprite" optional="YES" attributeType="String"/>
+        <attribute name="sprite" optional="YES" attributeType="String"/>
+        <attribute name="stringId" optional="YES" attributeType="String"/>
+        <relationship name="preevolution" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pokemon" inverseName="evolution" inverseEntity="Pokemon"/>
+    </entity>
+    <entity name="Pokemon" representedClassName="Pokemon" syncable="YES" codeGenerationType="class">
+        <attribute name="baseSpecies" optional="YES" attributeType="String"/>
+        <attribute name="color" optional="YES" attributeType="String"/>
+        <attribute name="key" optional="YES" attributeType="String"/>
+        <attribute name="num" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="shinySprite" optional="YES" attributeType="String"/>
+        <attribute name="sprite" optional="YES" attributeType="String"/>
+        <attribute name="stringId" optional="YES" attributeType="String"/>
+        <attribute name="types" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <relationship name="evolution" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Evolution" inverseName="preevolution" inverseEntity="Evolution"/>
+        <relationship name="preevolution" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PreEvolution" inverseName="evolution" inverseEntity="PreEvolution"/>
+    </entity>
+    <entity name="PreEvolution" representedClassName="PreEvolution" syncable="YES" codeGenerationType="class">
+        <attribute name="color" optional="YES" attributeType="String"/>
+        <attribute name="key" optional="YES" attributeType="String"/>
+        <attribute name="num" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="shinySprite" optional="YES" attributeType="String"/>
+        <attribute name="sprite" optional="YES" attributeType="String"/>
+        <attribute name="stringId" optional="YES" attributeType="String"/>
+        <relationship name="evolution" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pokemon" inverseName="preevolution" inverseEntity="Pokemon"/>
+    </entity>
+</model>

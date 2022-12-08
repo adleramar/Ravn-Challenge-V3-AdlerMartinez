@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PokemonDetails: Hashable, Decodable {
+struct PokemonInfoAPIModel: Hashable, Decodable {
     var uuid = UUID()
     let num: Int
     let color: String
@@ -16,8 +16,8 @@ struct PokemonDetails: Hashable, Decodable {
     let sprite: String
     let shinySprite: String?
     let types: [String]
-    let preevolutions: [EvolutionInfo]?
-    let evolutions: [EvolutionInfo]?
+    let preevolutions: [EvolutionAPIModel]?
+    let evolutions: [EvolutionAPIModel]?
     
     enum CodingKeys: CodingKey {
         case num
@@ -39,11 +39,11 @@ struct PokemonDetails: Hashable, Decodable {
         self.sprite = pokemon?.sprite ?? ""
         self.shinySprite = pokemon?.shinySprite ?? ""
         self.types = pokemon?.types as? [String] ?? []
-        self.preevolutions = pokemon?.preevolutions?.map({ preevolution -> EvolutionInfo in
-            EvolutionInfo(preevolution)
+        self.preevolutions = pokemon?.preevolutions?.map({ preevolution -> EvolutionAPIModel in
+            EvolutionAPIModel(preevolution)
         }) ?? []
-        self.evolutions = pokemon?.evolutions?.map({ preevolution -> EvolutionInfo in
-            EvolutionInfo(preevolution)
+        self.evolutions = pokemon?.evolutions?.map({ preevolution -> EvolutionAPIModel in
+            EvolutionAPIModel(preevolution)
         }) ?? []
     }
 }
