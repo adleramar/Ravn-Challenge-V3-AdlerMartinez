@@ -21,6 +21,11 @@ class PokemonCell: UITableViewCell {
         // Initialization code
     }
 
+    func setupCell(pokemon: Pokemon) {
+        pokemonNameLabel.text = pokemon.key?.capitalized ?? ""
+        pokemonNumberLabel.text = pokemon.stringId ?? ""
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

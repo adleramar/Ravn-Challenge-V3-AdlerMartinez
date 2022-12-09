@@ -9,6 +9,11 @@
         <attribute name="stringId" optional="YES" attributeType="String"/>
         <relationship name="preevolution" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pokemon" inverseName="evolution" inverseEntity="Pokemon"/>
     </entity>
+    <entity name="Generation" representedClassName="Generation" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="urlString" optional="YES" attributeType="String"/>
+        <relationship name="pokemon" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Pokemon" inverseName="generation" inverseEntity="Pokemon"/>
+    </entity>
     <entity name="Pokemon" representedClassName="Pokemon" syncable="YES" codeGenerationType="class">
         <attribute name="baseSpecies" optional="YES" attributeType="String"/>
         <attribute name="color" optional="YES" attributeType="String"/>
@@ -19,6 +24,7 @@
         <attribute name="stringId" optional="YES" attributeType="String"/>
         <attribute name="types" optional="YES" attributeType="Transformable" customClassName="[String]"/>
         <relationship name="evolution" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Evolution" inverseName="preevolution" inverseEntity="Evolution"/>
+        <relationship name="generation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Generation" inverseName="pokemon" inverseEntity="Generation"/>
         <relationship name="preevolution" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PreEvolution" inverseName="evolution" inverseEntity="PreEvolution"/>
         <relationship name="type" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PokemonType" inverseName="pokemon" inverseEntity="PokemonType"/>
     </entity>

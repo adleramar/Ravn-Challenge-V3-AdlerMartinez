@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct PokemonTypeAPIModel: Decodable {
+struct PokemonTypeGenerationAPIModel: Decodable {
     let count: Int
     let next: Int?
     let previous: Int?
-    let results: [TypeResults]
+    let results: [TypeGenerationResults]
     
-    struct TypeResults: Decodable {
+    struct TypeGenerationResults: Decodable {
         let name: String
         let url: String
     }

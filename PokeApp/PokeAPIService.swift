@@ -20,8 +20,75 @@ class PokeAPIService {
     }
     
     // MARK: - API methods
+    // empty string will make the URl return all generations of pokémon
+    func getPokemonGenerations(completion: @escaping (_ Types: PokemonTypeGenerationAPIModel?) -> ()) {
+
+        var request = URLRequest(url: URL(string: "https://pokeapi.co/api/v2/generation/")!)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let task = url.dataTask(with: request) { [weak self] (data, response, error) in
+            if error != nil {
+                completion(nil)
+            } else {
+                if let httpResponse = response as? HTTPURLResponse {
+                    let statusCode = httpResponse.statusCode
+                    
+                    if statusCode == 200 {
+                        let _data = data ?? Data()
+                        do {
+                            if let response = try self?.jsonDecoder.decode(PokemonTypeGenerationAPIModel.self, from: _data) {
+                                completion(response)
+                            } else {
+                                completion(nil)
+                            }
+                        } catch {
+                            completion(nil)
+                        }
+                    } else {
+                        completion(nil)
+                    }
+                }
+            }
+        }
+        task.resume()
+    }// end getPokemonGenerations()
     
-    func getPokemonTypes(completion: @escaping (_ Types: PokemonTypeAPIModel?) -> ()) {
+    // specified number of generation to get from URL
+    func getPokemongeneration(generationName: String, completion: @escaping (_ Types: GenerationDetailsAPIModel?) -> ()) {
+        
+        var request = URLRequest(url: URL(string: "https://pokeapi.co/api/v2/generation/\(generationName)")!)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let task = url.dataTask(with: request) { [weak self] (data, response, error) in
+            if error != nil {
+                completion(nil)
+            } else {
+                if let httpResponse = response as? HTTPURLResponse {
+                    let statusCode = httpResponse.statusCode
+                    
+                    if statusCode == 200 {
+                        let _data = data ?? Data()
+                        do {
+                            if let response = try self?.jsonDecoder.decode(GenerationDetailsAPIModel.self, from: _data) {
+                                completion(response)
+                            } else {
+                                completion(nil)
+                            }
+                        } catch {
+                            completion(nil)
+                        }
+                    } else {
+                        completion(nil)
+                    }
+                }
+            }
+        }
+        task.resume()
+    }// end getPokemongeneration()
+    
+    func getPokemonTypes(completion: @escaping (_ Types: PokemonTypeGenerationAPIModel?) -> ()) {
         
         var request = URLRequest(url: URL(string: "https://pokeapi.co/api/v2/type")!)
         request.httpMethod = "GET"
@@ -37,7 +104,7 @@ class PokeAPIService {
                     if statusCode == 200 {
                         let _data = data ?? Data()
                         do {
-                            if let response = try self?.jsonDecoder.decode([PokemonTypeAPIModel].self, from: _data) {
+                            if let response = try self?.jsonDecoder.decode(PokemonTypeGenerationAPIModel.self, from: _data) {
                                 completion(response)
                             } else {
                                 completion(nil)

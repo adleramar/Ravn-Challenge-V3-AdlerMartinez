@@ -7,8 +7,8 @@
 
 import UIKit
 
-fileprivate typealias PokemonSnapshot = NSDiffableDataSourceSnapshot<AnyHashable, Pokemon>
-fileprivate typealias PokemonDataSource = UITableViewDiffableDataSource<AnyHashable, Pokemon>
+fileprivate typealias PokemonSnapshot = NSDiffableDataSourceSnapshot<Int, Pokemon>
+fileprivate typealias PokemonDataSource = UITableViewDiffableDataSource<Int, Pokemon>
 
 class PokemonSearchVC: UIViewController, UITableViewDelegate {
     // Outlets
@@ -16,6 +16,7 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate {
     // Variables
     var viewModel: PokemonViewModel!
     let searchController = UISearchController()
+    private var dataSource: PokemonDataSource!
     lazy var refresher: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
 //        refreshControl.addTarget(self, action: #selector(loadData), for: .valueChanged)
@@ -33,8 +34,28 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate {
         pokemonTableView.register(UINib(nibName: "PokemonCell", bundle: nil), forCellReuseIdentifier: "pokemonCell")
         viewModel = PokemonViewModel()
         viewModel.fetchDataFromService()
+        configureDataSource()
+        createSnapshot(generations: self.viewModel.allPokemon)
     }
 
+    private func configureDataSource() {
+        dataSource = PokemonDataSource(tableView: pokemonTableView, cellProvider: { (tableView, indexPath, item) -> UITableViewCell in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonCell", for: indexPath) as! PokemonCell
+            cell.setupCell(pokemon: item)
+            return cell
+        })
+    }
     
+    private func createSnapshot(generations: [Pokemon]) {
+        var snapshot = PokemonSnapshot()
+        
+        snapshot.appendSections([1])
+        snapshot.appendItems(generations)
+        dataSource?.apply(snapshot)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
 }
 
