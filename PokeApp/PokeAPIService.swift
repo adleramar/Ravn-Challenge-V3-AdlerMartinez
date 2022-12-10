@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 class PokeAPIService {
     
@@ -21,103 +22,61 @@ class PokeAPIService {
     
     // MARK: - API methods
     // empty string will make the URl return all generations of pokémon
-    func getPokemonGenerations(completion: @escaping (_ Types: PokemonTypeGenerationAPIModel?) -> ()) {
-
+    func getPokemonGenerations() -> AnyPublisher<PokemonTypeGenerationAPIModel, NetworkError> {
         var request = URLRequest(url: URL(string: "https://pokeapi.co/api/v2/generation/")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let task = url.dataTask(with: request) { [weak self] (data, response, error) in
-            if error != nil {
-                completion(nil)
-            } else {
-                if let httpResponse = response as? HTTPURLResponse {
-                    let statusCode = httpResponse.statusCode
-                    
-                    if statusCode == 200 {
-                        let _data = data ?? Data()
-                        do {
-                            if let response = try self?.jsonDecoder.decode(PokemonTypeGenerationAPIModel.self, from: _data) {
-                                completion(response)
-                            } else {
-                                completion(nil)
-                            }
-                        } catch {
-                            completion(nil)
-                        }
-                    } else {
-                        completion(nil)
-                    }
+        return url.dataTaskPublisher(for: request)
+            .tryMap { response -> Data in
+                guard let httpResponse = response.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    throw NetworkError.badResponse
                 }
+                return response.data
             }
-        }
-        task.resume()
-    }// end getPokemonGenerations()
+            .decode(type: PokemonTypeGenerationAPIModel.self, decoder: JSONDecoder())
+            .mapError { _ in
+                return .badInfo
+            }
+            .eraseToAnyPublisher()
+    } // getPokemonGenerations()
     
     // specified number of generation to get from URL
-    func getPokemongeneration(generationName: String, completion: @escaping (_ Types: GenerationDetailsAPIModel?) -> ()) {
-        
+    func getPokemongeneration(generationName: String) -> AnyPublisher<GenerationDetailsAPIModel, NetworkError> {
         var request = URLRequest(url: URL(string: "https://pokeapi.co/api/v2/generation/\(generationName)")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let task = url.dataTask(with: request) { [weak self] (data, response, error) in
-            if error != nil {
-                completion(nil)
-            } else {
-                if let httpResponse = response as? HTTPURLResponse {
-                    let statusCode = httpResponse.statusCode
-                    
-                    if statusCode == 200 {
-                        let _data = data ?? Data()
-                        do {
-                            if let response = try self?.jsonDecoder.decode(GenerationDetailsAPIModel.self, from: _data) {
-                                completion(response)
-                            } else {
-                                completion(nil)
-                            }
-                        } catch {
-                            completion(nil)
-                        }
-                    } else {
-                        completion(nil)
-                    }
+        return url.dataTaskPublisher(for: request)
+            .tryMap { response -> Data in
+                guard let httpResponse = response.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    throw NetworkError.badResponse
                 }
+                return response.data
             }
-        }
-        task.resume()
-    }// end getPokemongeneration()
+            .decode(type: GenerationDetailsAPIModel.self, decoder: JSONDecoder())
+            .mapError { _ in
+                return .badInfo
+            }
+            .eraseToAnyPublisher()
+    } // getPokemongeneration()
     
-    func getPokemonTypes(completion: @escaping (_ Types: PokemonTypeGenerationAPIModel?) -> ()) {
-        
+    func getPokemonTypes() -> AnyPublisher<PokemonTypeGenerationAPIModel, NetworkError> {
         var request = URLRequest(url: URL(string: "https://pokeapi.co/api/v2/type")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let task = url.dataTask(with: request) { [weak self] (data, response, error) in
-            if error != nil {
-                completion(nil)
-            } else {
-                if let httpResponse = response as? HTTPURLResponse {
-                    let statusCode = httpResponse.statusCode
-                    
-                    if statusCode == 200 {
-                        let _data = data ?? Data()
-                        do {
-                            if let response = try self?.jsonDecoder.decode(PokemonTypeGenerationAPIModel.self, from: _data) {
-                                completion(response)
-                            } else {
-                                completion(nil)
-                            }
-                        } catch {
-                            completion(nil)
-                        }
-                    } else {
-                        completion(nil)
-                    }
+        return url.dataTaskPublisher(for: request)
+            .tryMap { response -> Data in
+                guard let httpResponse = response.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    throw NetworkError.badResponse
                 }
+                return response.data
             }
-        }
-        task.resume()
-    }// end getPokemonTypes()
+            .decode(type: PokemonTypeGenerationAPIModel.self, decoder: JSONDecoder())
+            .mapError { _ in
+                return .badInfo
+            }
+            .eraseToAnyPublisher()
+    } // end getPokemonTypes()
 }

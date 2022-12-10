@@ -21,42 +21,43 @@ class StoredPokemonRepository {
     
     func checkStoredGenerations() -> [Generation]? {
         let fetchRequest = NSFetchRequest<Generation>(entityName: "Generation")
-        let sort = NSSortDescriptor(key: "name", ascending: true)
-        
-        fetchRequest.sortDescriptors = [sort]
         
         do {
-            let pokemon = try managedContext.fetch(fetchRequest)
-            return pokemon
+            let gens = try managedContext.fetch(fetchRequest)
+            return gens
         } catch {
             return nil
         }
     } // end checkStoredPokemon()
     
-    func storeGenerationsLocally(generations: PokemonTypeGenerationAPIModel) -> Bool {
+    func storeGenerationsLocally(generations: PokemonTypeGenerationAPIModel) {
         for gen in generations.results {
-            let generation = Generation(context: managedContext)
+            let g = fetchSingleGeneration(byName: gen.name)
             
-            generation.name = gen.name
-            generation.urlString = gen.url
+            if g == nil {
+                let generation = Generation(context: managedContext)
+                
+                generation.name = gen.name
+                generation.urlString = gen.url
+            }
         }
         
         do {
             try managedContext.save()
         } catch {
-//            fatalError(error.localizedDescription)
-            return false
+            fatalError(error.localizedDescription)
+//            return false
         }
-        return true
+//        return true
     }
     
     func addPokemonToGeneration(generationDetails: GenerationDetailsAPIModel) {
-        let generation = fetchSingleGeneration(byName: generationDetails.name)
+        guard let generation = fetchSingleGeneration(byName: generationDetails.name) else {return}
         
         for pokemon in generationDetails.pokemon_species {
-            let foundPokemon = fetchSinglePokemon(byName: pokemon.name)
-            
-            generation.addToPokemon(foundPokemon)
+            if let foundPokemon = fetchSinglePokemon(byName: pokemon.name) {
+                generation.addToPokemon(foundPokemon)
+            }
         }
         
         do {
@@ -66,7 +67,7 @@ class StoredPokemonRepository {
         }
     }
     
-    func fetchSinglePokemon(byName: String) -> Pokemon {
+    func fetchSinglePokemon(byName: String) -> Pokemon? {
         let fetchRequest = NSFetchRequest<Pokemon>(entityName: "Pokemon")
         let predicate = NSPredicate(format: "key == %@", byName)
         
@@ -74,13 +75,13 @@ class StoredPokemonRepository {
         
         do {
             let pokemon = try managedContext.fetch(fetchRequest)
-            return pokemon[0]
+            return pokemon.first
         } catch {
             fatalError(error.localizedDescription)
         }
     }
 
-    func fetchSingleGeneration(byName: String) -> Generation {
+    func fetchSingleGeneration(byName: String) -> Generation? {
         let fetchRequest = NSFetchRequest<Generation>(entityName: "Generation")
         let predicate = NSPredicate(format: "name == %@", byName)
         
@@ -88,7 +89,7 @@ class StoredPokemonRepository {
         
         do {
             let generation = try managedContext.fetch(fetchRequest)
-            return generation[0]
+            return generation.first
         } catch {
             fatalError(error.localizedDescription)
         }
@@ -114,34 +115,53 @@ class StoredPokemonRepository {
     /// Method to store the pokemon data locally
     /// - Parameters:
     ///     - pokemon: array of pokemon details
-    func storePokemonLocally(pokemon: [PokemonInfoAPIModel], types: [PokemonTypeGenerationAPIModel.TypeGenerationResults]) -> Bool {
-        for singlePokemon in pokemon {
-            let localPokemon = Pokemon(context: managedContext)
-            
-            localPokemon.num = Int16(singlePokemon.num)
-            localPokemon.stringId = "#\(singlePokemon.num)"
-            localPokemon.color = singlePokemon.color
-            localPokemon.baseSpecies = singlePokemon.baseSpecies
-            localPokemon.key = singlePokemon.key
-            localPokemon.sprite = singlePokemon.sprite
-            localPokemon.shinySprite = singlePokemon.shinySprite
-            storePokemonTypesLocally(pokemon: localPokemon, typeNames: singlePokemon.types, types: types)
-            
-            if let preevolutions = singlePokemon.preevolutions {
-                self.storePokemonPreevolutions(pokemon: localPokemon, preevolutions: preevolutions)
-            }
-            if let evolutions = singlePokemon.evolutions {
-                self.storePokemonEvolutions(pokemon: localPokemon, evolutions: evolutions)
-            }
+    func addTypesToPokemon(types: [PokemonTypeGenerationAPIModel.TypeGenerationResults]) {
+        let all = checkStoredPokemon()
+        
+        for one in all ?? [] {
+            storePokemonTypesLocally(pokemon: one, types: types)
         }
         
         do {
             try managedContext.save()
+//            return true
+        } catch {
+                fatalError(error.localizedDescription)
+//            return false
+        }
+    } // end storePokemonLocally()
+    
+    func storePokemonLocally(pokemon: [PokemonInfoAPIModel]) -> Bool {
+        for singlePokemon in pokemon {
+             let p = fetchSinglePokemon(byName: singlePokemon.key)
+            
+            if p == nil {
+                let localPokemon = Pokemon(context: managedContext)
+                
+                localPokemon.num = Int16(singlePokemon.num)
+                localPokemon.stringId = "#\(singlePokemon.num)"
+                localPokemon.color = singlePokemon.color
+                localPokemon.baseSpecies = singlePokemon.baseSpecies
+                localPokemon.key = singlePokemon.key
+                localPokemon.sprite = singlePokemon.sprite
+                localPokemon.shinySprite = singlePokemon.shinySprite
+                localPokemon.types = singlePokemon.types
+                
+                if let preevolutions = singlePokemon.preevolutions {
+                    self.storePokemonPreevolutions(pokemon: localPokemon, preevolutions: preevolutions)
+                }
+                if let evolutions = singlePokemon.evolutions {
+                    self.storePokemonEvolutions(pokemon: localPokemon, evolutions: evolutions)
+                }
+            }
+        }
+        do {
+            try managedContext.save()
+            return true
         } catch {
 //                fatalError(error.localizedDescription)
             return false
         }
-        return true
     } // end storePokemonLocally()
     
     /// Method to add the pokemon evolution data to a pokemon
@@ -185,8 +205,8 @@ class StoredPokemonRepository {
     ///     - pokemon: the pokemon whose types are going to be added
     ///     - typeNames: the type strings provided by the graphQL Service
     ///     - types: the types of the pokemon provided by the REST Service
-    func storePokemonTypesLocally(pokemon: Pokemon, typeNames: [String], types: [PokemonTypeGenerationAPIModel.TypeGenerationResults]) {
-        for typeName in typeNames {
+    func storePokemonTypesLocally(pokemon: Pokemon, types: [PokemonTypeGenerationAPIModel.TypeGenerationResults]) {
+        for typeName in pokemon.types ?? [] {
             let pokeType = types.first(where: {$0.name == typeName.lowercased()})
             
             let pokemonType = PokemonType(context: managedContext)
