@@ -13,7 +13,7 @@ import Combine
 class PokemonViewModel {
     var allPokemon: [Pokemon] = []
     var allGenerations: [Generation]  = []
-    var data: [AnyHashable]  = []
+    var data: [AnyHashable]  = [1]
     var pokeAPIService: PokeAPIService
     var pokemonRepository: StoredPokemonRepository
     @Published var getDataStatus: DataStatus!
@@ -22,7 +22,7 @@ class PokemonViewModel {
     init() {
         pokeAPIService = PokeAPIService()
         pokemonRepository = StoredPokemonRepository()
-        
+        getDataStatus = .initialize
         subscriptions = Set<AnyCancellable>()
     }
     
@@ -33,9 +33,9 @@ class PokemonViewModel {
     }
     
     func fetchDataFromService() {
-        getDataStatus = .initialize
-        
         ApolloNetworkHelper.shared.apolloClient.fetch(query: GetAllPokemonQuery()) { [weak self] result in
+            self?.getDataStatus = .loadingPokemon
+            
             switch result {
             case .success(let petitionResult):
                 guard let pokemon = petitionResult.data?.getAllPokemon else {
@@ -43,9 +43,10 @@ class PokemonViewModel {
                     self?.getDataStatus = .error
                     return
                 }
-                //                print("Success! Result: \(petitionResult)")
+                
                 if self?.saveLocallyAllPokemon(data: self?.processPokemon(data: pokemon) ?? []) == true {
                     self?.savePokemonDetailsLocally()
+                    self?.getDataStatus = .success
                 }
                 
             case .failure(let error):
@@ -53,7 +54,6 @@ class PokemonViewModel {
                 self?.getDataStatus = .error
             }
         }
-        
     }
     
     func processPokemon(data: [PokemonData]) -> [PokemonInfoAPIModel] {
@@ -69,7 +69,6 @@ class PokemonViewModel {
         fetchGenerationsFromService()
         assignPokemonToGeneration()
         getPokemonByGenerationsFromStorage()
-        self.getDataStatus = .success
     }
     
     func savePokemonTypesLocally(data: [PokemonTypeGenerationAPIModel.TypeGenerationResults]) {
@@ -83,10 +82,10 @@ class PokemonViewModel {
     func fetchGenerationsFromService() {
         pokeAPIService.getPokemonGenerations()
             .receive(on: DispatchQueue.main, options: .none)
-            .sink(receiveCompletion: { res in
+            .sink(receiveCompletion: { [weak self] res in
                 switch res {
                 case .finished:
-                    print(res)
+                    self?.getDataStatus = .processData
                 case .failure(_):
                     break
                 }
@@ -102,10 +101,10 @@ class PokemonViewModel {
         for singleGen in genNames {
             pokeAPIService.getPokemongeneration(generationName: singleGen ?? "")
                 .receive(on: DispatchQueue.main, options: .none)
-                .sink(receiveCompletion: { res in
+                .sink(receiveCompletion: { [weak self] res in
                     switch res {
                     case .finished:
-                        print(res)
+                        self?.getDataStatus = .loadingPokemonGenerations
                     case .failure(_):
                         break
                     }
@@ -119,10 +118,10 @@ class PokemonViewModel {
     func fetchPokemonTypesfromService() {
         pokeAPIService.getPokemonTypes()
             .receive(on: DispatchQueue.main, options: .none)
-            .sink(receiveCompletion: { res in
+            .sink(receiveCompletion: { [weak self] res in
                 switch res {
                 case .finished:
-                    self.getDataStatus = .loading
+                    self?.getDataStatus = .loadingPokemonTypes
                 case .failure(_):
                     break
                 }

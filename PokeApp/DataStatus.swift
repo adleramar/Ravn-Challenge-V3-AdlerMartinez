@@ -8,8 +8,11 @@
 import Foundation
 
 enum DataStatus {
-    case loading
+    case initialize
+    case loadingPokemon
+    case loadingPokemonTypes
+    case loadingPokemonGenerations
+    case processData
     case error
     case success
-    case initialize
 }
