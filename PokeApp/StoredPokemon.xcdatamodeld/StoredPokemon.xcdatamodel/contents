@@ -26,12 +26,6 @@
         <relationship name="evolution" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Evolution" inverseName="preevolution" inverseEntity="Evolution"/>
         <relationship name="generation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Generation" inverseName="pokemon" inverseEntity="Generation"/>
         <relationship name="preevolution" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PreEvolution" inverseName="evolution" inverseEntity="PreEvolution"/>
-        <relationship name="type" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PokemonType" inverseName="pokemon" inverseEntity="PokemonType"/>
-    </entity>
-    <entity name="PokemonType" representedClassName="PokemonType" syncable="YES" codeGenerationType="class">
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="urlString" optional="YES" attributeType="String"/>
-        <relationship name="pokemon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pokemon" inverseName="type" inverseEntity="Pokemon"/>
     </entity>
     <entity name="PreEvolution" representedClassName="PreEvolution" syncable="YES" codeGenerationType="class">
         <attribute name="color" optional="YES" attributeType="String"/>

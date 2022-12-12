@@ -46,9 +46,7 @@ class StoredPokemonRepository {
             try managedContext.save()
         } catch {
             fatalError(error.localizedDescription)
-//            return false
         }
-//        return true
     }
     
     func addPokemonToGeneration(generationDetails: GenerationDetailsAPIModel) {
@@ -80,7 +78,7 @@ class StoredPokemonRepository {
             fatalError(error.localizedDescription)
         }
     }
-
+    
     func fetchSingleGeneration(byName: String) -> Generation? {
         let fetchRequest = NSFetchRequest<Generation>(entityName: "Generation")
         let predicate = NSPredicate(format: "name == %@", byName)
@@ -112,28 +110,10 @@ class StoredPokemonRepository {
         }
     } // end checkStoredPokemon()
     
-    /// Method to store the pokemon data locally
-    /// - Parameters:
-    ///     - pokemon: array of pokemon details
-    func addTypesToPokemon(types: [PokemonTypeGenerationAPIModel.TypeGenerationResults]) {
-        let all = checkStoredPokemon()
-        
-        for one in all ?? [] {
-            storePokemonTypesLocally(pokemon: one, types: types)
-        }
-        
-        do {
-            try managedContext.save()
-//            return true
-        } catch {
-                fatalError(error.localizedDescription)
-//            return false
-        }
-    } // end storePokemonLocally()
     
     func storePokemonLocally(pokemon: [PokemonInfoAPIModel]) -> Bool {
         for singlePokemon in pokemon {
-             let p = fetchSinglePokemon(byName: singlePokemon.key)
+            let p = fetchSinglePokemon(byName: singlePokemon.key)
             
             if p == nil {
                 let localPokemon = Pokemon(context: managedContext)
@@ -145,7 +125,7 @@ class StoredPokemonRepository {
                 localPokemon.key = singlePokemon.key
                 localPokemon.sprite = singlePokemon.sprite
                 localPokemon.shinySprite = singlePokemon.shinySprite
-                localPokemon.types = singlePokemon.types
+                localPokemon.types = singlePokemon.types.map({$0.name.lowercased()})
                 
                 if let preevolutions = singlePokemon.preevolutions {
                     self.storePokemonPreevolutions(pokemon: localPokemon, preevolutions: preevolutions)
@@ -153,13 +133,14 @@ class StoredPokemonRepository {
                 if let evolutions = singlePokemon.evolutions {
                     self.storePokemonEvolutions(pokemon: localPokemon, evolutions: evolutions)
                 }
+                
             }
         }
         do {
             try managedContext.save()
             return true
         } catch {
-//                fatalError(error.localizedDescription)
+            //                fatalError(error.localizedDescription)
             return false
         }
     } // end storePokemonLocally()
@@ -177,7 +158,7 @@ class StoredPokemonRepository {
             localPokemonEvolution.key = evolution.key
             localPokemonEvolution.sprite = evolution.sprite
             localPokemonEvolution.shinySprite = evolution.shinySprite
-           
+            
             pokemon.addToEvolution(localPokemonEvolution)
         }
     } // end storePokemonEvolutions()
@@ -195,26 +176,8 @@ class StoredPokemonRepository {
             localPokemonPreEvolution.key = preevolution.key
             localPokemonPreEvolution.sprite = preevolution.sprite
             localPokemonPreEvolution.shinySprite = preevolution.shinySprite
-           
+            
             pokemon.addToPreevolution(localPokemonPreEvolution)
         }
     } // end storePokemonPreevolutions()
-    
-    /// Method to store the pokemon type data locally
-    /// - Parameters:
-    ///     - pokemon: the pokemon whose types are going to be added
-    ///     - typeNames: the type strings provided by the graphQL Service
-    ///     - types: the types of the pokemon provided by the REST Service
-    func storePokemonTypesLocally(pokemon: Pokemon, types: [PokemonTypeGenerationAPIModel.TypeGenerationResults]) {
-        for typeName in pokemon.types ?? [] {
-            let pokeType = types.first(where: {$0.name == typeName.lowercased()})
-            
-            let pokemonType = PokemonType(context: managedContext)
-            
-            pokemonType.name = pokeType?.name
-            pokemonType.urlString = pokeType?.url
-            
-            pokemon.addToType(pokemonType)
-        }
-    } // end storePokemonTypesLocally()
 }

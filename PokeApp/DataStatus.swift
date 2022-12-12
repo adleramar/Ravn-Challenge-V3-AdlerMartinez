@@ -15,4 +15,5 @@ enum DataStatus {
     case processData
     case error
     case success
+    case noInternet
 }

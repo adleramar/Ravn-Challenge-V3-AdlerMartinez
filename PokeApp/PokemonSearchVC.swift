@@ -30,7 +30,7 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Pokémon List"
-        navigationItem.searchController = searchController
+//        navigationItem.searchController = searchController
         pokemonTableView.delegate = self
         pokemonTableView.separatorStyle = .none
         pokemonTableView.refreshControl = refresher
@@ -48,18 +48,32 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate {
             .sink(receiveCompletion: { _ in
             }, receiveValue: { [weak self] value in
                 switch value {
-                case .error:
-//                    self?.navigationItem.searchController?.searchBar.isHidden = false
-                    self?.pokemonTableView.refreshControl?.endRefreshing()
-                    self?.createSnapshot(generations: self?.viewModel.data ?? [1])
-                case .success:
-//                    self?.navigationItem.searchController?.searchBar.isHidden = false
-                    self?.pokemonTableView.refreshControl?.endRefreshing()
-                    self?.createSnapshot(generations: self?.viewModel.data ?? [1])
-                default:
-//                    self?.navigationItem.searchController?.searchBar.isHidden = true
+                case .initialize:
+//                  self?.navigationItem.searchController?.searchBar.isHidden = true
                     self?.pokemonTableView.refreshControl?.beginRefreshing()
                     self?.createSnapshot(generations: self?.viewModel.data ?? [1])
+                case .loadingPokemon:
+                    self?.createSnapshot(generations: self?.viewModel.data ?? [1])
+                case .loadingPokemonTypes:
+                    self?.createSnapshot(generations: self?.viewModel.data ?? [1])
+                case .loadingPokemonGenerations:
+                    self?.createSnapshot(generations: self?.viewModel.data ?? [1])
+                case .processData:
+                    self?.createSnapshot(generations: self?.viewModel.data ?? [1])
+                case .success:
+                    //                    self?.navigationItem.searchController?.searchBar.isHidden = false
+                    self?.pokemonTableView.refreshControl?.endRefreshing()
+                    self?.createSnapshot(generations: self?.viewModel.data ?? [1])
+                case .error:
+                    //                    self?.navigationItem.searchController?.searchBar.isHidden = false
+                    self?.pokemonTableView.refreshControl?.endRefreshing()
+                    self?.createSnapshot(generations: self?.viewModel.data ?? [1])
+                case .noInternet:
+                    self?.pokemonTableView.refreshControl?.endRefreshing()
+                    self?.createSnapshot(generations: self?.viewModel.data ?? [1])
+                    self?.noInternetToast()
+                case .none:
+                    break
                 }
             })
             .store(in: &subscriptions)
@@ -74,20 +88,23 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate {
     @objc func loadData() {
         viewModel.fetchDataFromService()
     }
-
+    
     private func configureDataSource() {
-        dataSource = PokemonDataSource(tableView: pokemonTableView, cellProvider: { (tableView, indexPath, item) -> UITableViewCell in
+        dataSource = PokemonDataSource(tableView: pokemonTableView, cellProvider: { [weak self] (tableView, indexPath, item) -> UITableViewCell in
             if item is Int  {
                 let loadingCell = tableView.dequeueReusableCell(withIdentifier: "loadingDataCell", for: indexPath) as! LoadingDataCell
+                if self?.viewModel.getDataStatus == .error || self?.viewModel.getDataStatus == .noInternet {
+                    loadingCell.loadingLabel.text = "No data"
+                } else {
+                    loadingCell.loadingLabel.text = "Loading..."
+                }
                 return loadingCell
             } else if let pokemonData = item as? Pokemon {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonCell", for: indexPath) as! PokemonCell
                 cell.setupCell(pokemon: pokemonData)
                 return cell
             }
-            let loadingCell = tableView.dequeueReusableCell(withIdentifier: "loadingDataCell", for: indexPath) as! LoadingDataCell
-            loadingCell.loadingLabel.text = "No data"
-            return loadingCell
+            return UITableViewCell()
         })
     }
     
@@ -99,19 +116,19 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate {
             snapshot.appendItems(generations)
         } else {
             guard let sections = generations as? [PokemonViewModel.PokemonByGenerations] else {return}
-
+            
             snapshot.appendSections(sections)
-
+            
             for genSection in sections {
                 snapshot.appendItems(genSection.pokemon, toSection: genSection)
             }
         }
-//        snapshot.appendSections(generations)
-//        for genSection in generations {
-////            snapshot.appendItems(genSection.pokemon, toSection: genSection)
-//            guard let pokemonByGen = genSection.pokemon?.allObjects as? [Pokemon] else {return}
-//            snapshot.appendItems(pokemonByGen, toSection: genSection)
-//        }
+        //        snapshot.appendSections(generations)
+        //        for genSection in generations {
+        ////            snapshot.appendItems(genSection.pokemon, toSection: genSection)
+        //            guard let pokemonByGen = genSection.pokemon?.allObjects as? [Pokemon] else {return}
+        //            snapshot.appendItems(pokemonByGen, toSection: genSection)
+        //        }
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
     
@@ -133,13 +150,13 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-         let sectionHeaderHeight: CGFloat = 40
-         if scrollView.contentOffset.y <= sectionHeaderHeight &&
+        let sectionHeaderHeight: CGFloat = 40
+        if scrollView.contentOffset.y <= sectionHeaderHeight &&
             scrollView.contentOffset.y >= 0 {
-             scrollView.contentInset = UIEdgeInsets(top: -scrollView.contentOffset.y, left: 0, bottom: 0, right: 0)
-         } else if scrollView.contentOffset.y >= sectionHeaderHeight {
-             scrollView.contentInset = UIEdgeInsets(top: -sectionHeaderHeight, left: 0, bottom: 0, right: 0)
-         }
-     }
+            scrollView.contentInset = UIEdgeInsets(top: -scrollView.contentOffset.y, left: 0, bottom: 0, right: 0)
+        } else if scrollView.contentOffset.y >= sectionHeaderHeight {
+            scrollView.contentInset = UIEdgeInsets(top: -sectionHeaderHeight, left: 0, bottom: 0, right: 0)
+        }
+    }
 }
 

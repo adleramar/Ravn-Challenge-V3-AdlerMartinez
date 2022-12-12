@@ -34,7 +34,7 @@ class PokeAPIService {
                 }
                 return response.data
             }
-            .decode(type: PokemonTypeGenerationAPIModel.self, decoder: JSONDecoder())
+            .decode(type: PokemonTypeGenerationAPIModel.self, decoder: jsonDecoder)
             .mapError { _ in
                 return .badInfo
             }
@@ -54,7 +54,7 @@ class PokeAPIService {
                 }
                 return response.data
             }
-            .decode(type: GenerationDetailsAPIModel.self, decoder: JSONDecoder())
+            .decode(type: GenerationDetailsAPIModel.self, decoder: jsonDecoder)
             .mapError { _ in
                 return .badInfo
             }
@@ -73,7 +73,7 @@ class PokeAPIService {
                 }
                 return response.data
             }
-            .decode(type: PokemonTypeGenerationAPIModel.self, decoder: JSONDecoder())
+            .decode(type: PokemonTypeGenerationAPIModel.self, decoder: jsonDecoder)
             .mapError { _ in
                 return .badInfo
             }

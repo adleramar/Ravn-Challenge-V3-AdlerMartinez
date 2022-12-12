@@ -33,15 +33,35 @@
 		5F7E459F293BEFBF006D6501 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E459D293BEFBF006D6501 /* Main.storyboard */; };
 		5F7E45A1293BEFC0006D6501 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E45A0293BEFC0006D6501 /* Assets.xcassets */; };
 		5F7E45A4293BEFC0006D6501 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E45A2293BEFC0006D6501 /* LaunchScreen.storyboard */; };
+		5FB6ED4F29453A0500211D95 /* SwiftyGif in Frameworks */ = {isa = PBXBuildFile; productRef = 5FB6ED4E29453A0500211D95 /* SwiftyGif */; };
+		5FB6ED5329453B3B00211D95 /* SwiftyGif-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 5FB6ED5029453B3B00211D95 /* SwiftyGif-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5FB6ED562945429E00211D95 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 5FB6ED552945429E00211D95 /* Reachability */; };
+		5FB6ED592945512B00211D95 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 5FB6ED582945512B00211D95 /* Toast */; };
+		5FB6ED5B2945518E00211D95 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB6ED5A2945518E00211D95 /* UIViewControllerExtensions.swift */; };
+		5FB6ED5D2945587E00211D95 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB6ED5C2945587E00211D95 /* NetworkManager.swift */; };
 		5FDD8F7E293E974200FDD18A /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 5FDD8F7D293E974200FDD18A /* Apollo */; };
 		5FDD8F80293E974200FDD18A /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 5FDD8F7F293E974200FDD18A /* ApolloAPI */; };
 		5FF21503293F17CD003DF11E /* schema.graphqls in Resources */ = {isa = PBXBuildFile; fileRef = 5FF21502293F17CD003DF11E /* schema.graphqls */; };
 		5FF21505293F182D003DF11E /* GetAllPokemon.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 5FF21504293F182D003DF11E /* GetAllPokemon.graphql */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5FB6ED5229453B3B00211D95 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5FB6ED5329453B3B00211D95 /* SwiftyGif-Dynamic in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		5F1A277F293FA9B800A18CA0 /* ApolloNetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApolloNetworkHelper.swift; sourceTree = "<group>"; };
-		5F1A2781293FB3E500A18CA0 /* PokemonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonViewModel.swift; sourceTree = "<group>"; };
+		5F1A2781293FB3E500A18CA0 /* PokemonViewModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = PokemonViewModel.swift; sourceTree = "<group>"; };
 		5F1A2789293FC07100A18CA0 /* PokemonAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonAPIModel.swift; sourceTree = "<group>"; };
 		5F417A6F2942EE2100E7E211 /* GenerationDetailsAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerationDetailsAPIModel.swift; sourceTree = "<group>"; };
 		5F4DFC6D2941411700873D07 /* StoredPokemonRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredPokemonRepository.swift; sourceTree = "<group>"; };
@@ -67,6 +87,8 @@
 		5F7E45A0293BEFC0006D6501 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F7E45A3293BEFC0006D6501 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F7E45A5293BEFC0006D6501 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5FB6ED5A2945518E00211D95 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
+		5FB6ED5C2945587E00211D95 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		5FF21502293F17CD003DF11E /* schema.graphqls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = schema.graphqls; sourceTree = "<group>"; };
 		5FF21504293F182D003DF11E /* GetAllPokemon.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetAllPokemon.graphql; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,7 +98,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FB6ED592945512B00211D95 /* Toast in Frameworks */,
 				5F6F47A5294037D1007874FA /* PokemonAPI in Frameworks */,
+				5FB6ED4F29453A0500211D95 /* SwiftyGif in Frameworks */,
+				5FB6ED562945429E00211D95 /* Reachability in Frameworks */,
 				5FDD8F80293E974200FDD18A /* ApolloAPI in Frameworks */,
 				5FDD8F7E293E974200FDD18A /* Apollo in Frameworks */,
 			);
@@ -106,6 +131,7 @@
 		5F4DFC732941626200873D07 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				5FB6ED4729450BD100211D95 /* Utilities */,
 				5F4DFC75294165A800873D07 /* Cells */,
 				5F7E459B293BEFBF006D6501 /* PokemonSearchVC.swift */,
 				5F7E459D293BEFBF006D6501 /* Main.storyboard */,
@@ -221,6 +247,15 @@
 			path = PokeApp;
 			sourceTree = "<group>";
 		};
+		5FB6ED4729450BD100211D95 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5FB6ED5A2945518E00211D95 /* UIViewControllerExtensions.swift */,
+				5FB6ED5C2945587E00211D95 /* NetworkManager.swift */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		5FF2150B293F238A003DF11E /* GraphQL */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,6 +277,7 @@
 				5F7E4590293BEFBF006D6501 /* Sources */,
 				5F7E4591293BEFBF006D6501 /* Frameworks */,
 				5F7E4592293BEFBF006D6501 /* Resources */,
+				5FB6ED5229453B3B00211D95 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -253,6 +289,10 @@
 				5FDD8F7D293E974200FDD18A /* Apollo */,
 				5FDD8F7F293E974200FDD18A /* ApolloAPI */,
 				5F6F47A4294037D1007874FA /* PokemonAPI */,
+				5FB6ED4E29453A0500211D95 /* SwiftyGif */,
+				5FB6ED5029453B3B00211D95 /* SwiftyGif-Dynamic */,
+				5FB6ED552945429E00211D95 /* Reachability */,
+				5FB6ED582945512B00211D95 /* Toast */,
 			);
 			productName = PokeApp;
 			productReference = 5F7E4594293BEFBF006D6501 /* PokeApp.app */;
@@ -284,6 +324,9 @@
 			mainGroup = 5F7E458B293BEFBF006D6501;
 			packageReferences = (
 				5FDD8F7C293E974200FDD18A /* XCRemoteSwiftPackageReference "apollo-ios" */,
+				5FB6ED4D29453A0500211D95 /* XCRemoteSwiftPackageReference "SwiftyGif" */,
+				5FB6ED542945429E00211D95 /* XCRemoteSwiftPackageReference "Reachability" */,
+				5FB6ED572945512B00211D95 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = 5F7E4595293BEFBF006D6501 /* Products */;
 			projectDirPath = "";
@@ -325,10 +368,12 @@
 				5F4DFC8029416BD200873D07 /* PokemonTypeGenerationAPIModel.swift in Sources */,
 				5F4DFC78294165DA00873D07 /* PokemonCell.swift in Sources */,
 				5F1A2782293FB3E500A18CA0 /* PokemonViewModel.swift in Sources */,
+				5FB6ED5B2945518E00211D95 /* UIViewControllerExtensions.swift in Sources */,
 				5F6F47A829403881007874FA /* EvolutionAPIModel.swift in Sources */,
 				5F4DFC7D29416A4C00873D07 /* PokeAPIService.swift in Sources */,
 				5F1A2780293FA9B800A18CA0 /* ApolloNetworkHelper.swift in Sources */,
 				5F6330792943A1D700C3269A /* DataStatus.swift in Sources */,
+				5FB6ED5D2945587E00211D95 /* NetworkManager.swift in Sources */,
 				5F7E4598293BEFBF006D6501 /* AppDelegate.swift in Sources */,
 				5F6F47AA294038E7007874FA /* PokemonInfoAPIModel.swift in Sources */,
 				5F6F47AE29404092007874FA /* StoredPokemon.xcdatamodeld in Sources */,
@@ -562,6 +607,30 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5FB6ED4D29453A0500211D95 /* XCRemoteSwiftPackageReference "SwiftyGif" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kirualex/SwiftyGif.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		5FB6ED542945429E00211D95 /* XCRemoteSwiftPackageReference "Reachability" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		5FB6ED572945512B00211D95 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		5FDD8F7C293E974200FDD18A /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
@@ -580,6 +649,26 @@
 		5F6F47A4294037D1007874FA /* PokemonAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PokemonAPI;
+		};
+		5FB6ED4E29453A0500211D95 /* SwiftyGif */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FB6ED4D29453A0500211D95 /* XCRemoteSwiftPackageReference "SwiftyGif" */;
+			productName = SwiftyGif;
+		};
+		5FB6ED5029453B3B00211D95 /* SwiftyGif-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FB6ED4D29453A0500211D95 /* XCRemoteSwiftPackageReference "SwiftyGif" */;
+			productName = "SwiftyGif-Dynamic";
+		};
+		5FB6ED552945429E00211D95 /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FB6ED542945429E00211D95 /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
+		};
+		5FB6ED582945512B00211D95 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FB6ED572945512B00211D95 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 		5FDD8F7D293E974200FDD18A /* Apollo */ = {
 			isa = XCSwiftPackageProductDependency;

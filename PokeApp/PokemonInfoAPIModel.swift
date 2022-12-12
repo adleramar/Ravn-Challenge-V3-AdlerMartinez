@@ -6,6 +6,9 @@
 //
 
 import Foundation
+import PokemonAPI
+
+typealias PokeType = GetAllPokemonQuery.Data.GetAllPokemon.Type_SelectionSet
 
 struct PokemonInfoAPIModel: Hashable, Decodable {
     var uuid = UUID()
@@ -15,9 +18,10 @@ struct PokemonInfoAPIModel: Hashable, Decodable {
     let key: String
     let sprite: String
     let shinySprite: String?
-    let types: [String]
+    let types: [TypeName]
     let preevolutions: [EvolutionAPIModel]?
     let evolutions: [EvolutionAPIModel]?
+    
     
     enum CodingKeys: CodingKey {
         case num
@@ -38,12 +42,22 @@ struct PokemonInfoAPIModel: Hashable, Decodable {
         self.key = pokemon?.key.rawValue ?? ""
         self.sprite = pokemon?.sprite ?? ""
         self.shinySprite = pokemon?.shinySprite ?? ""
-        self.types = pokemon?.types as? [String] ?? []
+        self.types = pokemon?.types.map({ type -> TypeName in
+            TypeName(name: type)
+        }) ?? []
         self.preevolutions = pokemon?.preevolutions?.map({ preevolution -> EvolutionAPIModel in
             EvolutionAPIModel(preevolution)
         }) ?? []
         self.evolutions = pokemon?.evolutions?.map({ preevolution -> EvolutionAPIModel in
             EvolutionAPIModel(preevolution)
         }) ?? []
+    }
+}
+
+struct TypeName: Decodable, Hashable {
+    let name: String
+    
+    init(name: PokeType) {
+        self.name = name.name
     }
 }
