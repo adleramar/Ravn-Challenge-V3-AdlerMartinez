@@ -157,6 +157,7 @@ class StoredPokemonRepository {
             localPokemonEvolution.color = evolution.color
             localPokemonEvolution.key = evolution.key
             localPokemonEvolution.sprite = evolution.sprite
+            localPokemonEvolution.stringId = "#\(evolution.num)"
             localPokemonEvolution.shinySprite = evolution.shinySprite
             
             pokemon.addToEvolution(localPokemonEvolution)

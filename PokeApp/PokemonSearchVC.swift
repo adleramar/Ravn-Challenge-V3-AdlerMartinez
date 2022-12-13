@@ -11,7 +11,7 @@ import Combine
 fileprivate typealias PokemonSnapshot = NSDiffableDataSourceSnapshot<AnyHashable, AnyHashable>
 fileprivate typealias PokemonDataSource = UITableViewDiffableDataSource<AnyHashable, AnyHashable>
 
-class PokemonSearchVC: UIViewController, UITableViewDelegate {
+class PokemonSearchVC: UIViewController, UITableViewDelegate, PokemonDelegate {
     // Outlets
     @IBOutlet weak var pokemonTableView: UITableView!
     // Variables
@@ -30,7 +30,7 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Pokémon List"
-//        navigationItem.searchController = searchController
+        navigationItem.searchController = searchController
         pokemonTableView.delegate = self
         pokemonTableView.separatorStyle = .none
         pokemonTableView.refreshControl = refresher
@@ -55,8 +55,6 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate {
                 case .loadingPokemon:
                     self?.createSnapshot(generations: self?.viewModel.data ?? [1])
                 case .loadingPokemonTypes:
-                    self?.createSnapshot(generations: self?.viewModel.data ?? [1])
-                case .loadingPokemonGenerations:
                     self?.createSnapshot(generations: self?.viewModel.data ?? [1])
                 case .processData:
                     self?.createSnapshot(generations: self?.viewModel.data ?? [1])
@@ -102,6 +100,7 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate {
             } else if let pokemonData = item as? Pokemon {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonCell", for: indexPath) as! PokemonCell
                 cell.setupCell(pokemon: pokemonData)
+                cell.delegate = self
                 return cell
             }
             return UITableViewCell()
@@ -123,12 +122,6 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate {
                 snapshot.appendItems(genSection.pokemon, toSection: genSection)
             }
         }
-        //        snapshot.appendSections(generations)
-        //        for genSection in generations {
-        ////            snapshot.appendItems(genSection.pokemon, toSection: genSection)
-        //            guard let pokemonByGen = genSection.pokemon?.allObjects as? [Pokemon] else {return}
-        //            snapshot.appendItems(pokemonByGen, toSection: genSection)
-        //        }
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
     
@@ -144,19 +137,15 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = Bundle.main.loadNibNamed("GenHeaderView", owner: self, options: nil)?.first as! GenHeaderView
         guard let sections = viewModel.data as? [PokemonViewModel.PokemonByGenerations] else {return UIView()}
-        let genName = sections[section].generation.name?.replacingOccurrences(of: "-", with: " ")
+        let genName = sections[section].generation.name?.replacingOccurrences(of: "-", with: " ").uppercased()
         headerView.genLabel.text = genName
         return headerView
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let sectionHeaderHeight: CGFloat = 40
-        if scrollView.contentOffset.y <= sectionHeaderHeight &&
-            scrollView.contentOffset.y >= 0 {
-            scrollView.contentInset = UIEdgeInsets(top: -scrollView.contentOffset.y, left: 0, bottom: 0, right: 0)
-        } else if scrollView.contentOffset.y >= sectionHeaderHeight {
-            scrollView.contentInset = UIEdgeInsets(top: -sectionHeaderHeight, left: 0, bottom: 0, right: 0)
-        }
+    func presentPokemonDetails(pokemon: Pokemon) {
+        let detailsVC = PokemonDetailsVC.instantiate()
+        detailsVC.pokemon = pokemon
+        navigationController?.pushViewController(detailsVC, animated: true)
     }
 }
 

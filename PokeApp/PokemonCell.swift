@@ -8,6 +8,10 @@
 import UIKit
 import SwiftyGif
 
+protocol PokemonDelegate: AnyObject {
+    func presentPokemonDetails(pokemon: Pokemon)
+}
+
 class PokemonCell: UITableViewCell, SwiftyGifDelegate {
 
     @IBOutlet weak var greyBackgroundView: UIView!
@@ -16,18 +20,30 @@ class PokemonCell: UITableViewCell, SwiftyGifDelegate {
     @IBOutlet weak var pokemonNumberLabel: UILabel!
     @IBOutlet weak var pokemonTypeImageViewLeft: UIImageView!
     @IBOutlet weak var pokemonTypeImageViewRight: UIImageView!
+    @IBOutlet weak var containerVIew: UIView!
     
+    weak var delegate: PokemonDelegate!
+    var pokemon: Pokemon!
     override func awakeFromNib() {
         super.awakeFromNib()
         pokemonImageView.delegate = self
     }
 
     func setupCell(pokemon: Pokemon) {
+        self.pokemon = pokemon
         pokemonNameLabel.text = pokemon.key?.capitalized ?? ""
         pokemonNumberLabel.text = pokemon.stringId ?? ""
         self.setupPokemonSprite(urlString: pokemon.sprite ?? "")
-        self.setupImageBy(type: pokemon.types?.first ?? "", imageView: pokemonTypeImageViewLeft)
-        self.setupImageBy(type: pokemon.types?.last ?? "", imageView: pokemonTypeImageViewRight)
+        
+        if pokemon.types?.count ?? 1 < 2 {
+            pokemonTypeImageViewLeft.isHidden = true
+            self.setupImageBy(type: pokemon.types?.first ?? "", imageView: pokemonTypeImageViewRight)
+        } else {
+            self.setupImageBy(type: pokemon.types?.first ?? "", imageView: pokemonTypeImageViewLeft)
+            self.setupImageBy(type: pokemon.types?.last ?? "", imageView: pokemonTypeImageViewRight)
+        }
+        
+        containerVIew.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectedCell)))
     }
     
     private func setupPokemonSprite(urlString: String) {
@@ -84,4 +100,7 @@ class PokemonCell: UITableViewCell, SwiftyGifDelegate {
         selectionStyle = .none
     }
     
+    @objc func selectedCell() {
+        delegate.presentPokemonDetails(pokemon: self.pokemon)
+    }
 }

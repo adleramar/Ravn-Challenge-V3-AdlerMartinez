@@ -11,8 +11,6 @@ import PokemonAPI
 import Combine
 
 class PokemonViewModel {
-   var allPokemon: [Pokemon] = []
-   var allGenerations: [Generation]  = []
    var data: [AnyHashable]  = [1]
    var pokeAPIService: PokeAPIService
    var pokemonRepository: StoredPokemonRepository
@@ -35,6 +33,7 @@ class PokemonViewModel {
    func fetchDataFromService() {
       NetworkManager.isUnreachable { [weak self] _ in
          self?.getDataStatus = .noInternet
+         self?.getPokemonByGenerationsFromStorage()
       }
       
       NetworkManager.isReachable { [weak self] _ in
@@ -51,8 +50,8 @@ class PokemonViewModel {
                }
                
                if self?.saveLocallyAllPokemon(data: self?.processPokemon(data: pokemon) ?? []) == true {
-                  self?.savePokemonDetailsLocally()
-                  self?.getDataStatus = .success
+                  self?.fetchGenerationsFromService()
+                  self?.assignPokemonToGeneration()
                }
                
             case .failure(let error):
@@ -69,12 +68,6 @@ class PokemonViewModel {
    
    func saveLocallyAllPokemon(data: [PokemonInfoAPIModel]) -> Bool {
       return pokemonRepository.storePokemonLocally(pokemon: data)
-   }
-   
-   func savePokemonDetailsLocally() {
-      fetchGenerationsFromService()
-      assignPokemonToGeneration()
-      getPokemonByGenerationsFromStorage()
    }
    
    func saveGeneralGenerationInformationLocally(data: PokemonTypeGenerationAPIModel) {
@@ -112,12 +105,13 @@ class PokemonViewModel {
             .sink(receiveCompletion: { [weak self] res in
                switch res {
                case .finished:
-                  self?.getDataStatus = .loadingPokemonGenerations
+                  self?.getDataStatus = .success
                case .failure(_):
                   break
                }
             }, receiveValue: { [weak self] data in
                self?.pokemonRepository.addPokemonToGeneration(generationDetails: data)
+               self?.getPokemonByGenerationsFromStorage()
             })
             .store(in: &subscriptions)
       }
@@ -125,9 +119,17 @@ class PokemonViewModel {
    
    func getPokemonByGenerationsFromStorage()  {
       data = []
-      for gen in self.pokemonRepository.checkStoredGenerations()?.sorted(by: {$0.name ?? "" < $1.name ?? ""}) ?? [] {
-         let listOfPokemon = PokemonByGenerations(generation: gen, pokemon: (gen.pokemon?.allObjects as! [Pokemon]).sorted(by: {$0.num < $1.num}))
-         data.append(listOfPokemon)
+      
+      guard let generations = self.pokemonRepository.checkStoredGenerations()?.sorted(by: {$0.name ?? "" < $1.name ?? ""}) else {
+         data = [1]
+         return
+      }
+      
+      if data.isEmpty {
+         for gen in generations {
+            let listOfPokemon = PokemonByGenerations(generation: gen, pokemon: (gen.pokemon?.allObjects as! [Pokemon]).sorted(by: {$0.num < $1.num}))
+            data.append(listOfPokemon)
+         }
       }
    }
 }

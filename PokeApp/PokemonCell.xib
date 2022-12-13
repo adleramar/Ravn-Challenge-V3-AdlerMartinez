@@ -81,6 +81,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="containerVIew" destination="H2p-sc-9uM" id="VSs-Vf-UMH"/>
                 <outlet property="greyBackgroundView" destination="EiS-W2-ac2" id="s7Z-fe-gxG"/>
                 <outlet property="pokemonImageView" destination="2dU-lE-def" id="8uq-FQ-qQJ"/>
                 <outlet property="pokemonNameLabel" destination="lfd-dW-haw" id="ISl-6c-JJm"/>
