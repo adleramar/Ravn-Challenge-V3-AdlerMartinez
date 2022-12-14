@@ -17,8 +17,8 @@ NetworkManager: Holds the Reachability logic so it can be used by the view model
 
 ## Setup/Instructions
 - After clonning the project just enter the folder 
-- Locate the PokeApp.xcodeproj 
-- There's no need to install the libraries, they were cloned along
+- Locate the PokeApp.xcodeproj and open it
+- This project uses Swift Package Manager, just wait for the dependencies to load
 - Run the project
 
 ### If you happen to run into this problem
