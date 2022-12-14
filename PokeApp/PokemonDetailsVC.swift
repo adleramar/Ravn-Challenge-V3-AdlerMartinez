@@ -41,7 +41,7 @@ class PokemonDetailsVC: UIViewController, UITableViewDelegate, MainStoryboardIns
         }
         
         setupBackground(color: pokemon.pokemonColor)
-        generationLabel.text = pokemon.generation?.name?.uppercased()
+        generationLabel.text = pokemon.generation?.name?.replacingOccurrences(of: "-", with: " ").uppercased()
         
         configureDataSource()
         
