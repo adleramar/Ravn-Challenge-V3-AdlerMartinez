@@ -16,7 +16,6 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate, PokemonDelegate {
     @IBOutlet weak var pokemonTableView: UITableView!
     // Variables
     var viewModel: PokemonViewModel!
-    let searchController = UISearchController()
     private var dataSource: PokemonDataSource!
     private var subscriptions = Set<AnyCancellable>()
     
@@ -30,7 +29,8 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate, PokemonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Pokémon List"
-        navigationItem.searchController = searchController
+        
+        //tableview config
         pokemonTableView.delegate = self
         pokemonTableView.separatorStyle = .none
         pokemonTableView.refreshControl = refresher
@@ -49,7 +49,7 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate, PokemonDelegate {
             }, receiveValue: { [weak self] value in
                 switch value {
                 case .initialize:
-//                  self?.navigationItem.searchController?.searchBar.isHidden = true
+                    //                  self?.navigationItem.searchController?.searchBar.isHidden = true
                     self?.pokemonTableView.refreshControl?.beginRefreshing()
                     self?.createSnapshot(generations: self?.viewModel.data ?? [1])
                 case .loadingPokemon:
@@ -114,14 +114,16 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate, PokemonDelegate {
             snapshot.appendSections([1])
             snapshot.appendItems(generations)
         } else {
-            guard let sections = generations as? [PokemonViewModel.PokemonByGenerations] else {return}
+            guard let sections = generations as? [Generation] else {return}
             
             snapshot.appendSections(sections)
             
             for genSection in sections {
-                snapshot.appendItems(genSection.pokemon, toSection: genSection)
+                guard let pokemonByGeneration = genSection.pokemon?.allObjects as? [Pokemon] else {return}
+                snapshot.appendItems(pokemonByGeneration.sorted(by: {$0.num < $1.num}), toSection: genSection)
             }
         }
+        
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
     
@@ -136,8 +138,8 @@ class PokemonSearchVC: UIViewController, UITableViewDelegate, PokemonDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = Bundle.main.loadNibNamed("GenHeaderView", owner: self, options: nil)?.first as! GenHeaderView
-        guard let sections = viewModel.data as? [PokemonViewModel.PokemonByGenerations] else {return UIView()}
-        let genName = sections[section].generation.name?.replacingOccurrences(of: "-", with: " ").uppercased()
+        guard let sections = viewModel.data as? [Generation] else {return UIView()}
+        let genName = sections[section].name?.replacingOccurrences(of: "-", with: " ").uppercased()
         headerView.genLabel.text = genName
         return headerView
     }

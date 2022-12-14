@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tEy-Bl-CIs">
-                                <rect key="frame" x="0.0" y="143" width="390" height="667"/>
+                                <rect key="frame" x="0.0" y="91" width="390" height="719"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -122,6 +122,7 @@
                             <constraint firstItem="YeD-hI-6MY" firstAttribute="trailing" secondItem="mcy-J7-7pI" secondAttribute="trailing" id="qBu-OX-EKk"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="mTq-Fi-ulA"/>
                     <connections>
                         <outlet property="generationLabel" destination="BKl-u0-hIK" id="eAU-k9-8jU"/>
                         <outlet property="pokemonEvolutionsTableView" destination="DKO-8L-939" id="XGP-n3-YL1"/>
@@ -139,10 +140,9 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Xjs-R1-kBy" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="gcT-9s-zUM">
-                        <rect key="frame" x="0.0" y="47" width="390" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gcT-9s-zUM">
+                        <rect key="frame" x="0.0" y="47" width="390" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <navigationBarAppearance key="scrollEdgeAppearance"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

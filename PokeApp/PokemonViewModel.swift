@@ -24,12 +24,6 @@ class PokemonViewModel {
       subscriptions = Set<AnyCancellable>()
    }
    
-   struct PokemonByGenerations: Hashable {
-      let uuid = UUID()
-      let generation: Generation
-      let pokemon: [Pokemon]
-   }
-   
    func fetchDataFromService() {
       NetworkManager.isUnreachable { [weak self] _ in
          self?.getDataStatus = .noInternet
@@ -126,10 +120,7 @@ class PokemonViewModel {
       }
       
       if data.isEmpty {
-         for gen in generations {
-            let listOfPokemon = PokemonByGenerations(generation: gen, pokemon: (gen.pokemon?.allObjects as! [Pokemon]).sorted(by: {$0.num < $1.num}))
-            data.append(listOfPokemon)
-         }
+         data = generations
       }
    }
 }
