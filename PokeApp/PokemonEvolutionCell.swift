@@ -29,10 +29,14 @@ class PokemonEvolutionCell: UITableViewCell {
         setupPokemonSprite(urlString: pokemon.sprite ?? "", imageView: currentPokemonImageView)
         currentPokemonNameLabel.text = pokemon.key?.capitalized ?? ""
         currentPokemonNumLabel.text = pokemon.stringId ?? ""
+        currentPokemonContainerView.asCircle()
+        currentPokemonContainerView.layer.backgroundColor = UIColor(named: "Gray")?.cgColor
         //Evolution
         setupPokemonSprite(urlString: evolution.sprite ?? "", imageView: evolutionSpriteImageView)
         evolutionPokemonNameLabel.text = evolution.key?.capitalized ?? ""
         evolutionNumLabel.text = evolution.stringId ?? ""
+        evolutionContainerView.asCircle()
+        evolutionContainerView.layer.backgroundColor = UIColor(named: "Gray")?.cgColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
