@@ -21,16 +21,19 @@ NetworkManager: Holds the Reachability logic so it can be used by the view model
 - There's no need to install the libraries, they were cloned along
 - Run the project
 
-### if you happen to run into this problem
+### If you happen to run into this problem
 ![image description](Screenshots/commandError.png)
 
 Go to the project
+
 ![image description](Screenshots/project.png)
 
 Select targets
+
 ![image description](Screenshots/targets.png)
 
 Delete SwiftyGif-Dynamic
+
 ![image description](Screenshots/deleteSwiftyGif.png)
 
 Run again
