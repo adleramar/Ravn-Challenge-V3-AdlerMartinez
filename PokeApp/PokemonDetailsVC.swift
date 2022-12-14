@@ -18,6 +18,7 @@ class PokemonDetailsVC: UIViewController, UITableViewDelegate, MainStoryboardIns
     @IBOutlet weak var pokemonEvolutionsTableView: UITableView!
     @IBOutlet weak var pokemonNameLabel: UILabel!
     @IBOutlet weak var generationLabel: UILabel!
+    @IBOutlet weak var evolutionViewContainer: UIView!
     
     
     var pokemon: Pokemon!
@@ -42,6 +43,8 @@ class PokemonDetailsVC: UIViewController, UITableViewDelegate, MainStoryboardIns
         
         setupBackground(color: pokemon.pokemonColor)
         generationLabel.text = pokemon.generation?.name?.replacingOccurrences(of: "-", with: " ").uppercased()
+        
+        evolutionViewContainer.layer.cornerRadius = 30
         
         configureDataSource()
         
